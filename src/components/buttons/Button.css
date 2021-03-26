@@ -1,0 +1,32 @@
+.btn {
+    display: flex;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    align-items: center;
+    font-family: Actor;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 36px;
+    background: #f15a58;
+    color: white;
+  
+    outline: 1px solid #888;
+}
+
+.extra {
+    display: flex;
+    justify-content: center;
+    width: 200px;
+    height: 100px;
+    align-items: center;
+    font-family: Actor;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 36px;
+    background: #f15a58;
+    color: white;
+    outline: 1px solid #888;
+}
