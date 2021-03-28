@@ -37,12 +37,12 @@ class App extends Component {
         break;
       }
       default: {
-        let patternSign = /[-+\/*]/;
+        let patternSign = /[-+/*]/;
         let lastChar = Array.from(this.state.input);
         lastChar = lastChar.slice(-1);
 
         if (patternSign.test(lastChar) && patternSign.test(value)) {
-          this.setState({ input: this.state.input.slice(0,-1) + value });
+          this.setState({ input: this.state.input.slice(0, -1) + value });
         } else {
           this.setState({ input: this.state.input + value });
         }
@@ -55,35 +55,39 @@ class App extends Component {
     return (
       <div className="app">
         <div className="calc">
+          <div className="row">
           <Input input={this.state.input} />
-          <div className="row">
-            <Button handlerClick={this.solve} value="C" content="C" />
-            <Button handlerClick={this.solve} value="+/-" content="+/-" />
-            <Button handlerClick={this.solve} value="%" content="%" />
-            <Button handlerClick={this.solve} value="/" content="/" />
           </div>
-          <div className="row">
-            <Button handlerClick={this.solve} value="7" content="7" />
-            <Button handlerClick={this.solve} value="8" content="8" />
-            <Button handlerClick={this.solve} value="9" content="9" />
-            <Button handlerClick={this.solve} value="*" content="*" />
-          </div>
-          <div className="row">
-            <Button handlerClick={this.solve} value="4" content="4" />
-            <Button handlerClick={this.solve} value="5" content="5" />
-            <Button handlerClick={this.solve} value="6" content="6" />
-            <Button handlerClick={this.solve} value="-" content="-" />
-          </div>
-          <div className="row">
-            <Button handlerClick={this.solve} value="1" content="1" />
-            <Button handlerClick={this.solve} value="2" content="2" />
-            <Button handlerClick={this.solve} value="3" content="3" />
-            <Button handlerClick={this.solve} value="+" content="+" />
-          </div>
-          <div className="row">
-            <Button handlerClick={this.solve} value="0" content="0" />
-            <Button handlerClick={this.solve} value="." content="." />
-            <Button handlerClick={this.solve} value="=" content="=" />
+          <div className="bg-digits">
+            <div className="row">
+              <Button handlerClick={this.solve} value="C" content="C" />
+              <Button handlerClick={this.solve} value="+/-" content="+/-" />
+              <Button handlerClick={this.solve} value="%" content="%" />
+              <Button handlerClick={this.solve} value="/" content="/" />
+            </div>
+            <div className="row">
+              <Button handlerClick={this.solve} value="7" content="7" />
+              <Button handlerClick={this.solve} value="8" content="8" />
+              <Button handlerClick={this.solve} value="9" content="9" />
+              <Button handlerClick={this.solve} value="*" content="*" />
+            </div>
+            <div className="row">
+              <Button handlerClick={this.solve} value="4" content="4" />
+              <Button handlerClick={this.solve} value="5" content="5" />
+              <Button handlerClick={this.solve} value="6" content="6" />
+              <Button handlerClick={this.solve} value="-" content="-" />
+            </div>
+            <div className="row">
+              <Button handlerClick={this.solve} value="1" content="1" />
+              <Button handlerClick={this.solve} value="2" content="2" />
+              <Button handlerClick={this.solve} value="3" content="3" />
+              <Button handlerClick={this.solve} value="+" content="+" />
+            </div>
+            <div className="row">
+              <Button handlerClick={this.solve} value="0" content="0" />
+              <Button handlerClick={this.solve} value="." content="." />
+              <Button handlerClick={this.solve} value="=" content="=" />
+            </div>
           </div>
         </div>
       </div >

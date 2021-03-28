@@ -8,10 +8,21 @@
 
 .calc {
   width: 400px;
-  height: 80%;
+  height: 100%;
+}
+
+.bg-digits {
+  background: linear-gradient(180deg, #F2736E -24.93%, #F04949 96.2%);;
 }
 
 .row {
   display: flex;
   width: 100%;
+}
+
+@media screen and (max-width: 400px) {
+  .calc {
+    width: 360px;
+    height: 100%;
+  }
 }

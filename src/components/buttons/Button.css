@@ -1,7 +1,6 @@
 .btn {
     display: flex;
     justify-content: center;
-    width: 100px;
     height: 100px;
     align-items: center;
     font-family: Actor;
@@ -9,24 +8,40 @@
     font-weight: normal;
     font-size: 30px;
     line-height: 36px;
-    background: #f15a58;
     color: white;
-  
-    outline: 1px solid #888;
+    background: rgba(0, 0, 0, 0);
+    outline-style: solid;
+    outline-color: rgba(251, 255, 255, 0.1);
+    outline-width: 1px;
 }
 
-.extra {
-    display: flex;
-    justify-content: center;
-    width: 200px;
-    height: 100px;
-    align-items: center;
-    font-family: Actor;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 30px;
-    line-height: 36px;
-    background: #f15a58;
-    color: white;
-    outline: 1px solid #888;
+.bg-zero {
+    background: rgba(227, 61, 61, 1);
+}
+
+.width-normal {
+    width: 25%;
+}
+
+.width-extra {
+    width: 50%;
+}
+
+@media screen and (max-width: 400px) {
+    .btn {
+        display: flex;
+        justify-content: center;
+        height: 90px;
+        align-items: center;
+        font-family: Actor;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 28px;
+        line-height: 34px;
+        color: white;
+        background: rgba(0, 0, 0, 0);
+        outline-style: solid;
+        outline-color: rgba(251, 255, 255, 0.1);
+        outline-width: 1px;
+    } 
 }

@@ -4,16 +4,21 @@ import './Button.css';
 const whichStyle = (val) => {
     switch (val) {
         case '0': {
-            return 'extra';
+            return 'width-extra';
         }
-        default: { return 'btn'; }
+        case '=': {
+            return 'width-normal bg-zero'
+        }
+        default: {
+            return 'width-normal';
+        }
 
     }
 }
 
 const Button = (props) => {
     return (
-        <div className={`${whichStyle(props.value)}`} onClick={() => props.handlerClick(props.value)}>
+        <div className={`btn ${whichStyle(props.value)}`} onClick={() => props.handlerClick(props.value)}>
             {props.content}
         </div>
     );

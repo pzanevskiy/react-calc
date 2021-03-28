@@ -1,11 +1,29 @@
 .input {
-    height: 4em;
+    height: 200px;
+    width: 100%;
     display: flex;
     justify-content: flex-end;
-    align-items: center;
-    font-size: 1.8em;   
-    background: #2d315b;
+    align-items: flex-end;
+    font-size: 48px;
+    background: linear-gradient(180deg, #2C3059 22.08%, #393E73 112.93%);    
     color: #fff;
-    padding: 0.5em;
-    outline: 1px solid #888;
+    padding-block: 3%;
+    padding-inline: 5%;
+    overflow-wrap: anywhere;
+}
+
+@media screen and (max-width: 400px) {
+    .input {
+        height: 100px;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        font-size: 24px;
+        background: linear-gradient(180deg, #2C3059 22.08%, #393E73 112.93%);    
+        color: #fff;
+        padding-block: 3%;
+        padding-inline: 5%;
+        overflow-wrap: anywhere;
+    }
 }
