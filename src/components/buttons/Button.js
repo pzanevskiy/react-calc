@@ -1,8 +1,13 @@
 import React from 'react';
 import './Button.css';
 
-const whichStyle = (val) => {
+const chooseStyle = (val) => {
     switch (val) {
+        case 'C':
+        case '+/-':
+        case '%': {
+            return 'width-normal text-with-opacity';
+        }
         case '0': {
             return 'width-extra';
         }
@@ -12,14 +17,14 @@ const whichStyle = (val) => {
         default: {
             return 'width-normal';
         }
-
     }
 }
 
+
 const Button = (props) => {
     return (
-        <div className={`btn ${whichStyle(props.value)}`} onClick={() => props.handlerClick(props.value)}>
-            {props.content}
+        <div className={`btn ${chooseStyle(props.value)}`} onClick={() => props.handlerClick(props.value)}>
+            {props.value}
         </div>
     );
 }

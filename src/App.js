@@ -10,14 +10,24 @@ class App extends Component {
     super(props);
 
     this.state = {
-      input: ""
+      input: "0"
     };
   }
 
-  solve = (value) => {
+  add = (value) => {
+    let expr = String(this.state.input);
+   
+    console.log(this.state.input);
+    if (expr.search(/[Error|NaN|Infinity]/g)!==-1) {
+      console.log('true')
+      this.state.input = "0";
+    } else {
+      console.log('not true')
+    }
+
     switch (value) {
       case 'C': {
-        this.setState({ input: "" });
+        this.setState({ input: "0" });
         break;
       }
       case '%': {
@@ -30,18 +40,22 @@ class App extends Component {
       }
       case '=': {
         try {
-          this.setState({ input: eval(this.state.input) });
+          let answer = String(eval(this.state.input.replace("÷", "/").replace("×", "*")));
+          this.setState({ input: answer });
         } catch (ex) {
           this.setState({ input: ex.name });
         }
         break;
       }
-      default: {
-        let patternSign = /[-+/*]/;
+      default: {      
         let lastChar = Array.from(this.state.input);
         lastChar = lastChar.slice(-1);
+    
+        if (this.state.input === "0" && !/[-+÷×]/.test(value)) {
+          this.state.input = '';
+        }
 
-        if (patternSign.test(lastChar) && patternSign.test(value)) {
+        if ((/[-+÷×]/.test(lastChar) && /[-+÷×]/.test(value)) || (/[.]/.test(lastChar) && /[.]/.test(value))) {
           this.setState({ input: this.state.input.slice(0, -1) + value });
         } else {
           this.setState({ input: this.state.input + value });
@@ -56,37 +70,37 @@ class App extends Component {
       <div className="app">
         <div className="calc">
           <div className="row">
-          <Input input={this.state.input} />
+            <Input input={this.state.input} />
           </div>
           <div className="bg-digits">
             <div className="row">
-              <Button handlerClick={this.solve} value="C" content="C" />
-              <Button handlerClick={this.solve} value="+/-" content="+/-" />
-              <Button handlerClick={this.solve} value="%" content="%" />
-              <Button handlerClick={this.solve} value="/" content="/" />
+              <Button handlerClick={this.add} value="C" />
+              <Button handlerClick={this.add} value="+/-" />
+              <Button handlerClick={this.add} value="%" />
+              <Button handlerClick={this.add} value="&divide;" />
             </div>
             <div className="row">
-              <Button handlerClick={this.solve} value="7" content="7" />
-              <Button handlerClick={this.solve} value="8" content="8" />
-              <Button handlerClick={this.solve} value="9" content="9" />
-              <Button handlerClick={this.solve} value="*" content="*" />
+              <Button handlerClick={this.add} value="7" />
+              <Button handlerClick={this.add} value="8" />
+              <Button handlerClick={this.add} value="9" />
+              <Button handlerClick={this.add} value="&times;" />
             </div>
             <div className="row">
-              <Button handlerClick={this.solve} value="4" content="4" />
-              <Button handlerClick={this.solve} value="5" content="5" />
-              <Button handlerClick={this.solve} value="6" content="6" />
-              <Button handlerClick={this.solve} value="-" content="-" />
+              <Button handlerClick={this.add} value="4" />
+              <Button handlerClick={this.add} value="5" />
+              <Button handlerClick={this.add} value="6" />
+              <Button handlerClick={this.add} value="-" />
             </div>
             <div className="row">
-              <Button handlerClick={this.solve} value="1" content="1" />
-              <Button handlerClick={this.solve} value="2" content="2" />
-              <Button handlerClick={this.solve} value="3" content="3" />
-              <Button handlerClick={this.solve} value="+" content="+" />
+              <Button handlerClick={this.add} value="1" />
+              <Button handlerClick={this.add} value="2" />
+              <Button handlerClick={this.add} value="3" />
+              <Button handlerClick={this.add} value="+" />
             </div>
             <div className="row">
-              <Button handlerClick={this.solve} value="0" content="0" />
-              <Button handlerClick={this.solve} value="." content="." />
-              <Button handlerClick={this.solve} value="=" content="=" />
+              <Button handlerClick={this.add} value="0" />
+              <Button handlerClick={this.add} value="." />
+              <Button handlerClick={this.add} value="=" />
             </div>
           </div>
         </div>
