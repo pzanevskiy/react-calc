@@ -16,9 +16,9 @@ class App extends Component {
 
   add = (value) => {
     let expr = String(this.state.input);
-   
+
     console.log(this.state.input);
-    if (expr.search(/[Error|NaN|Infinity]/g)!==-1) {
+    if (expr.search(/[Error|NaN|Infinity]/g) !== -1) {
       console.log('true')
       this.state.input = "0";
     } else {
@@ -31,8 +31,45 @@ class App extends Component {
         break;
       }
       case '%': {
+        let expr = this.state.input;
+        let percentage = "";
+        debugger;
+        for (let i = expr.length - 1; i >= 0; i--) {
+          let flag = /[-+÷×]/.test(expr[i])
+          if (flag) {
+            console.log(expr[i]);
+            break;
+          } else {
+            percentage += expr[i];
+            expr = expr.slice(0, -1);
+          }
+        }
+        percentage = percentage.split("").reverse().join("");
+        console.log(`Expr = ${expr}`);
+        console.log(`Percent = ${percentage}`);
         try {
-          this.setState({ input: this.state.input / 100 });
+          let lastOperation = expr.slice(-1);
+          expr = expr.slice(0, -1);
+          let percentageAnswer;
+          let finalExpr;
+          switch (lastOperation) {
+            case '÷':
+            case '×': {
+              percentageAnswer = percentage / 100;
+              finalExpr = expr + lastOperation + percentageAnswer;
+              break;
+            }
+            case '+':
+            case '-': {
+              percentageAnswer = Number(eval(expr)) / 100 * percentage;
+              finalExpr = expr + lastOperation + percentageAnswer;
+              break;
+            }
+            default : {
+              break;
+            }
+          }
+          this.setState({ input: eval(finalExpr.replace("÷", "/").replace("×", "*")) });
         } catch (ex) {
           this.setState({ input: ex.name });
         }
@@ -47,10 +84,10 @@ class App extends Component {
         }
         break;
       }
-      default: {      
+      default: {
         let lastChar = Array.from(this.state.input);
         lastChar = lastChar.slice(-1);
-    
+
         if (this.state.input === "0" && !/[-+÷×]/.test(value)) {
           this.state.input = '';
         }
