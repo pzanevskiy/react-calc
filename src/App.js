@@ -18,12 +18,9 @@ class App extends Component {
     let expr = String(this.state.input);
 
     console.log(this.state.input);
-    if (expr.search(/[Error|NaN|Infinity]/g) !== -1) {
-      console.log('true')
+    if (expr.search(/[Error|NaN|Infinity]/g) !== -1) {      
       this.state.input = "0";
-    } else {
-      console.log('not true')
-    }
+    } 
 
     switch (value) {
       case 'C': {
@@ -34,7 +31,7 @@ class App extends Component {
         let expr = this.state.input;
         let percentage = "";
         for (let i = expr.length - 1; i >= 0; i--) {
-          let flag = /[-+÷×]/.test(expr[i])
+          let flag = /[-+÷×\s]/.test(expr[i])
           if (flag) {
             break;
           } else {
@@ -82,6 +79,25 @@ class App extends Component {
           this.setState({ input: answer });
         } catch (ex) {
           this.setState({ input: ex.name });
+        }
+        break;
+      }
+      case '.': {
+        let expr = this.state.input;
+        let number = "";
+        for (let i = expr.length - 1; i >= 0; i--) {
+          let flag = /[-+÷×\s]/.test(expr[i])
+          if (flag) {
+            break;
+          } else {
+            number += expr[i];
+            expr = expr.slice(0, -1);
+          }
+        }
+        if(/[.]/.test(number) && /[.]/.test(value)){
+          
+        }else{
+          this.setState({ input: this.state.input + value });
         }
         break;
       }
