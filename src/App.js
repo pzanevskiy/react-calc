@@ -33,11 +33,9 @@ class App extends Component {
       case '%': {
         let expr = this.state.input;
         let percentage = "";
-        debugger;
         for (let i = expr.length - 1; i >= 0; i--) {
           let flag = /[-+÷×]/.test(expr[i])
           if (flag) {
-            console.log(expr[i]);
             break;
           } else {
             percentage += expr[i];
@@ -45,8 +43,7 @@ class App extends Component {
           }
         }
         percentage = percentage.split("").reverse().join("");
-        console.log(`Expr = ${expr}`);
-        console.log(`Percent = ${percentage}`);
+
         try {
           let lastOperation = expr.slice(-1);
           expr = expr.slice(0, -1);
@@ -73,6 +70,10 @@ class App extends Component {
         } catch (ex) {
           this.setState({ input: ex.name });
         }
+        break;
+      }
+      case '+/-': {
+        this.setState({input: this.state.input + `×(-1)`})
         break;
       }
       case '=': {
