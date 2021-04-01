@@ -3,24 +3,25 @@ import "./App.css";
 import Button from './components/buttons/Button';
 import Input from './components/input/Input';
 
-
 class App extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      input: "0"
+      input: "0",
+      list: ['1', '2', '3', '4', '5', '6']
     };
+
   }
 
   add = (value) => {
     let expr = String(this.state.input);
 
     console.log(this.state.input);
-    if (expr.search(/[Error|NaN|Infinity]/g) !== -1) {      
+    if (expr.search(/[Error|NaN|Infinity]/g) !== -1) {
       this.state.input = "0";
-    } 
+    }
 
     switch (value) {
       case 'C': {
@@ -59,23 +60,23 @@ class App extends Component {
               finalExpr = expr + lastOperation + percentageAnswer;
               break;
             }
-            default : {
+            default: {
               break;
             }
           }
-          this.setState({ input: eval(finalExpr.replace("÷", "/").replace("×", "*")) });
+          this.setState({ input: eval(finalExpr.replaceAll("÷", "/").replaceAll("×", "*")) });
         } catch (ex) {
           this.setState({ input: ex.name });
         }
         break;
       }
       case '+/-': {
-        this.setState({input: this.state.input + `×(-1)`})
+        this.setState({ input: this.state.input + `×(-1)` })
         break;
       }
       case '=': {
         try {
-          let answer = String(eval(this.state.input.replace("÷", "/").replace("×", "*")));
+          let answer = String(eval(this.state.input.replaceAll("÷", "/").replaceAll("×", "*")));
           this.setState({ input: answer });
         } catch (ex) {
           this.setState({ input: ex.name });
@@ -94,10 +95,14 @@ class App extends Component {
             expr = expr.slice(0, -1);
           }
         }
-        if(/[.]/.test(number) && /[.]/.test(value)){
-          
-        }else{
-          this.setState({ input: this.state.input + value });
+        if (/[.]/.test(number) && /[.]/.test(value)) {
+
+        } else {
+          if (/[-+÷×]/.test(this.state.input.slice(-1))) {
+            this.setState({ input: this.state.input + "0" + value });
+          } else {
+            this.setState({ input: this.state.input + value });
+          }
         }
         break;
       }
@@ -118,7 +123,11 @@ class App extends Component {
       }
     }
   }
-
+  toItems = () => {
+    return this.state.list.map(el =>
+      <Button key={el.toString()} handlerClick={this.add} value={el} />
+    );
+  }
   render() {
     return (
       <div className="app">
@@ -156,6 +165,12 @@ class App extends Component {
               <Button handlerClick={this.add} value="." />
               <Button handlerClick={this.add} value="=" />
             </div>
+            {/* <div className="row">
+              {
+                this.state.list.map(el =>
+                  <Button key={el.toString()} handlerClick={this.add} value={el} />)
+              }
+            </div> */}
           </div>
         </div>
       </div >
