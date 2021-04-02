@@ -10,7 +10,6 @@ class App extends Component {
 
     this.state = {
       input: "0",
-      list: ['1', '2', '3', '4', '5', '6']
     };
 
   }
@@ -29,8 +28,9 @@ class App extends Component {
         break;
       }
       case '%': {
-        let expr = this.state.input;
+        let expr = String(this.state.input);
         let percentage = "";
+
         for (let i = expr.length - 1; i >= 0; i--) {
           let flag = /[-+÷×\s]/.test(expr[i])
           if (flag) {
@@ -41,26 +41,23 @@ class App extends Component {
           }
         }
         percentage = percentage.split("").reverse().join("");
-
         try {
+
           if (expr === '') {
-            this.setState({ input: percentage / 100 });
+            this.setState({ input: this.state.input / 100 });
           } else {
             let lastOperation = expr.slice(-1);
             expr = expr.slice(0, -1);
             let percentageAnswer;
-            let finalExpr;
             switch (lastOperation) {
               case '÷':
               case '×': {
                 percentageAnswer = percentage / 100;
-                finalExpr = expr + lastOperation + percentageAnswer;
                 break;
               }
               case '+':
               case '-': {
-                percentageAnswer = Number(eval(expr)) / 100 * percentage;
-                finalExpr = expr + lastOperation + percentageAnswer;
+                percentageAnswer = Number(eval(expr.replaceAll("÷", "/").replaceAll("×", "*"))) / 100 * percentage;
                 break;
               }
               default: {
@@ -75,7 +72,11 @@ class App extends Component {
         break;
       }
       case '+/-': {
-        this.setState({ input: this.state.input + `×(-1)` })
+        if (/[-+÷×]/.test(this.state.input.slice(-1))) {
+          break;
+        } else {
+          this.setState({ input: this.state.input + `×(-1)` })
+        }
         break;
       }
       case '=': {
@@ -91,8 +92,7 @@ class App extends Component {
         let expr = this.state.input;
         let number = "";
         for (let i = expr.length - 1; i >= 0; i--) {
-          let flag = /[-+÷×\s]/.test(expr[i])
-          if (flag) {
+          if (/[-+÷×\s]/.test(expr[i])) {
             break;
           } else {
             number += expr[i];
@@ -100,7 +100,7 @@ class App extends Component {
           }
         }
         if (/[.]/.test(number) && /[.]/.test(value)) {
-
+          break;
         } else {
           if (/[-+÷×]/.test(this.state.input.slice(-1))) {
             this.setState({ input: this.state.input + "0" + value });
@@ -114,24 +114,23 @@ class App extends Component {
         let lastChar = Array.from(this.state.input);
         lastChar = lastChar.slice(-1);
 
-        if (this.state.input === "0" && !/[-+÷×]/.test(value)) {
+        if (String(this.state.input) === "0" && !/[-+÷×]/.test(value)) {
           this.state.input = '';
         }
 
-        if ((/[-+÷×]/.test(lastChar) && /[-+÷×]/.test(value)) || (/[.]/.test(lastChar) && /[.]/.test(value))) {
+        if ((/[-+÷×]/.test(lastChar) && /[-+÷×]/.test(value))) {
           this.setState({ input: this.state.input.slice(0, -1) + value });
         } else {
+          if(/[)]/.test(lastChar) && !/[-+÷×]/.test(value)){
+            break;
+          }
           this.setState({ input: this.state.input + value });
         }
         break;
       }
     }
   }
-  toItems = () => {
-    return this.state.list.map(el =>
-      <Button key={el.toString()} handlerClick={this.add} value={el} />
-    );
-  }
+
   render() {
     return (
       <div className="app">
@@ -169,12 +168,6 @@ class App extends Component {
               <Button handlerClick={this.add} value="." />
               <Button handlerClick={this.add} value="=" />
             </div>
-            {/* <div className="row">
-              {
-                this.state.list.map(el =>
-                  <Button key={el.toString()} handlerClick={this.add} value={el} />)
-              }
-            </div> */}
           </div>
         </div>
       </div >
