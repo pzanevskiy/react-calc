@@ -17,7 +17,7 @@ class App extends Component {
   add = (value) => {
     let expr = String(this.state.input);
     console.log(expr);
-    
+
     if (expr.search(/[Error|NaN|Infinity]/g) !== -1) {
       this.state.input = "0";
     }
@@ -42,13 +42,11 @@ class App extends Component {
           }
         }
         percentage = percentage.split("").reverse().join("");
-        debugger;
         try {
 
           if (expr === '') {
-            this.state.input=this.state.input+`/100`;
-            console.log(this.state.input)
-            this.setState({ input: eval(this.state.input)});
+            this.state.input = this.state.input + `/100`;
+            this.setState({ input: eval(this.state.input) });
           } else {
             let lastOperation = expr.slice(-1);
             expr = expr.slice(0, -1);
@@ -61,8 +59,7 @@ class App extends Component {
               }
               case '+':
               case '-': {
-                let finalExpr=`${expr.replaceAll("÷", "/").replaceAll("×", "*")}/100*${percentage}`;
-                console.log(finalExpr);
+                let finalExpr = `${expr.replaceAll("÷", "/").replaceAll("×", "*")}/100*${percentage}`;
                 percentageAnswer = String(eval(finalExpr));
                 break;
               }
@@ -121,21 +118,31 @@ class App extends Component {
       }
 
       case '0': {
-
+        if (this.state.input === "0") {
+          break;
+        }
+        if ((this.state.input.slice(-1) === "0" && /[-+÷×\s]/.test(this.state.input[this.state.input.length - 2])) || this.state.input.slice(-1) === ")") {
+          break;
+        } else {
+          this.setState({ input: this.state.input + value });
+        }
+        break;
       }
 
       default: {
         let lastChar = Array.from(this.state.input);
         lastChar = lastChar.slice(-1);
 
-        if (String(this.state.input) === "0" && !/[-+÷×]/.test(value)) {
-          this.state.input = '';
+        if (/[0]/.test(lastChar) && !/[-+÷×]/.test(value)) {
+          console.log(`last 0 and input not 0`);
+          this.setState({ input: this.state.input.slice(0, -1) + value });
+          console.log(this.state.input);
+          break;
         }
-
         if ((/[-+÷×]/.test(lastChar) && /[-+÷×]/.test(value))) {
           this.setState({ input: this.state.input.slice(0, -1) + value });
         } else {
-          if(/[)]/.test(lastChar) && !/[-+÷×]/.test(value)){
+          if (/[)]/.test(lastChar) && !/[-+÷×]/.test(value)) {
             break;
           }
           this.setState({ input: this.state.input + value });
