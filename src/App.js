@@ -16,8 +16,8 @@ class App extends Component {
 
   add = (value) => {
     let expr = String(this.state.input);
-
-    console.log(this.state.input);
+    console.log(expr);
+    
     if (expr.search(/[Error|NaN|Infinity]/g) !== -1) {
       this.state.input = "0";
     }
@@ -27,6 +27,7 @@ class App extends Component {
         this.setState({ input: "0" });
         break;
       }
+
       case '%': {
         let expr = String(this.state.input);
         let percentage = "";
@@ -41,10 +42,13 @@ class App extends Component {
           }
         }
         percentage = percentage.split("").reverse().join("");
+        debugger;
         try {
 
           if (expr === '') {
-            this.setState({ input: this.state.input / 100 });
+            this.state.input=this.state.input+`/100`;
+            console.log(this.state.input)
+            this.setState({ input: eval(this.state.input)});
           } else {
             let lastOperation = expr.slice(-1);
             expr = expr.slice(0, -1);
@@ -57,7 +61,9 @@ class App extends Component {
               }
               case '+':
               case '-': {
-                percentageAnswer = Number(eval(expr.replaceAll("÷", "/").replaceAll("×", "*"))) / 100 * percentage;
+                let finalExpr=`${expr.replaceAll("÷", "/").replaceAll("×", "*")}/100*${percentage}`;
+                console.log(finalExpr);
+                percentageAnswer = String(eval(finalExpr));
                 break;
               }
               default: {
@@ -71,6 +77,7 @@ class App extends Component {
         }
         break;
       }
+
       case '+/-': {
         if (/[-+÷×]/.test(this.state.input.slice(-1))) {
           break;
@@ -79,6 +86,7 @@ class App extends Component {
         }
         break;
       }
+
       case '=': {
         try {
           let answer = String(eval(this.state.input.replaceAll("÷", "/").replaceAll("×", "*")));
@@ -88,6 +96,7 @@ class App extends Component {
         }
         break;
       }
+
       case '.': {
         let expr = this.state.input;
         let number = "";
@@ -99,7 +108,7 @@ class App extends Component {
             expr = expr.slice(0, -1);
           }
         }
-        if (/[.]/.test(number) && /[.]/.test(value)) {
+        if (/[.)]/.test(number) && /[.]/.test(value)) {
           break;
         } else {
           if (/[-+÷×]/.test(this.state.input.slice(-1))) {
@@ -110,6 +119,11 @@ class App extends Component {
         }
         break;
       }
+
+      case '0': {
+
+      }
+
       default: {
         let lastChar = Array.from(this.state.input);
         lastChar = lastChar.slice(-1);
