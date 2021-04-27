@@ -26,3 +26,56 @@
     height: 100%;
   }
 }
+
+.modal {
+  background: linear-gradient(180deg, #F2736E -24.93%, #F04949 96.2%);;
+  font-size: 18px;
+}
+.modal > .header {
+  width: 100%;
+  border-bottom: 1px solid gray;
+  font-size: 24px;
+  text-align: center;
+  padding: 5px;
+}
+.modal > .content {
+  width: 100%;
+  padding: 10px 5px;
+}
+.modal > .actions {
+  width: 100%;
+  padding: 10px 5px;
+  margin: auto;
+  text-align: center;
+}
+.modal > .close {
+  cursor: pointer;
+  position: absolute;
+  display: block;
+  padding: 2px 5px;
+  line-height: 20px;
+  right: -10px;
+  top: -10px;
+  font-size: 24px;
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #cfcece;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  height: 100px;
+  align-items: center;
+  font-size: 30px;
+  color: #FFFFFF;
+  background: rgba(0, 0, 0, 0);
+  outline-style: solid;
+  outline-color: rgba(251, 255, 255, 0.1);
+  outline-width: 1px;
+}
+
+
+.width-ultra {
+  width: 100%
+}

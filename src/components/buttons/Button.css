@@ -11,9 +11,8 @@
     outline-width: 1px;
 }
 
-
 .text-with-opacity {
-    opacity: 0.5;   
+    opacity: 0.5;
 }
 
 .bg-zero {
@@ -26,6 +25,11 @@
 
 .width-extra {
     width: 50%;
+}
+
+.width-ultra {
+    border: none;
+    width: 100%
 }
 
 @media screen and (max-width: 400px) {
